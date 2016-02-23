@@ -1,0 +1,355 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+#page-container {
+  width: 962px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.inactive {
+  display: none;
+}
+
+img.github-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 48px;
+  font-weight: 300;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 36px;
+  font-weight: 300;
+}
+
+#app {
+  position: relative;
+}
+
+#mode-select {
+  margin-bottom: 8px;
+}
+
+#model-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#app-body {
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  width: 960px;
+  height: 540px;
+  position: relative;
+  overflow: hidden;
+}
+
+#app-body .panel {
+  width: 280px;
+  height: 500px;
+  padding: 20px 19px 20px 20px;
+  background-color: #f5f5f5;
+  border-right: 1px solid #e3e3e3;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+  position: absolute;
+  left: 0;
+}
+
+#app-body .panel .tab-pane {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+div.var-count {
+  margin-bottom: 15px;
+}
+
+table.propvars {
+  position: relative;
+  top: -24px;
+  left: 100px;
+  margin-bottom: -28px;
+}
+
+table.propvars td.var-name {
+  padding: 0 6px;
+}
+
+.eval-input {
+  margin-bottom: 10px;
+}
+
+.eval-input input {
+  width: 266px;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 12px;
+}
+
+.eval-output .alert {
+  padding-right: 14px;
+  margin-bottom: 10px;
+}
+
+.eval-output .alert > div {
+  overflow-y: auto;
+  max-height: 40px;
+}
+
+.eval-output .alert > div > div {
+  overflow: hidden;
+}
+
+.eval-output .symbol {
+  width: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.instructions {
+  position: absolute;
+  bottom: 0;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid #e3e3e3;
+}
+
+.instructions > ul {
+  margin-bottom: 0;
+}
+
+.instructions > ul > li:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+#app-body .graph {
+  width: 640px;
+  height: 540px;
+  position: absolute;
+  left: 320px;
+}
+
+#app-body .current-formula {
+  position: absolute;
+  top: 0;
+  left: 320px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3;
+  border-bottom-right-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05), 1px 1px 1px rgba(255,255,255,0.95);
+  padding: 10px;
+}
+
+svg {
+  background-color: #FFF;
+  border-radius: 0 3px 3px 0;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+svg.edit:not(.active):not(.ctrl) {
+  cursor: crosshair;
+}
+
+path.link {
+  fill: none;
+  stroke: #000;
+  stroke-width: 4px;
+  cursor: default;
+}
+
+svg.edit:not(.active):not(.ctrl) path.link {
+  cursor: pointer;
+}
+
+path.link.selected {
+  stroke-dasharray: 10,2;
+}
+
+path.link.dragline {
+  pointer-events: none;
+}
+
+path.link.hidden {
+  stroke-width: 0;
+}
+
+circle.node {
+  stroke-width: 1.5px;
+}
+
+svg.edit circle.node {
+  cursor: pointer;
+}
+
+g.waiting circle.node {
+  fill: #c7c7c7 !important;
+}
+
+g.waiting circle.node:not(.reflexive) {
+  stroke: #7f7f7f !important;
+}
+
+g.true circle.node {
+  fill: #98df8a !important;
+}
+
+g.true circle.node:not(.reflexive) {
+  stroke: #2ca02c !important;
+}
+
+g.false circle.node {
+  fill: #ff9896 !important;
+}
+
+g.false circle.node:not(.reflexive) {
+  stroke: #d62728 !important;
+}
+
+circle.node.reflexive {
+  stroke: #000 !important;
+  stroke-width: 2.5px;
+}
+
+text {
+  font-size: 12px;
+  pointer-events: none;
+}
+
+text.shadow {
+  stroke: #FFF;
+  stroke-width: 3px;
+  stroke-opacity: 0.9;
+}
+
+text.id {
+  text-anchor: middle;
+  font-weight: bold;
+}
+
+#whatis h2 {
+  margin-top: 50px;
+}
+
+#whatis h3 {
+  margin-top: 30px;
+  border-top: 1px solid #bce8f1;
+  color: #3a87ad;
+  letter-spacing: 2px;
+}
+
+#whatis h3:nth-of-type(2) {
+  text-align: right;
+}
+
+.table-striped tr:last-child td:first-child {
+  border-bottom-left-radius: 4px;
+}
+
+.table-striped tr:last-child td:last-child {
+  border-bottom-right-radius: 4px;
+}
+
+.connective-table th,
+.connective-table td {
+  width: 25%;
+}
+
+.truth-table th,
+.truth-table td {
+  width: 25%;
+  text-align: center;
+}
+
+.truth-table th:nth-child(2),
+.truth-table td:nth-child(2) {
+  border-right: 1px solid #ddd;
+}
+
+.relation-table th:first-child,
+.relation-table td:first-child {
+  width: 350px;
+}
+
+.relation-table th:nth-child(2),
+.relation-table td:nth-child(2) {
+  width: 200px;
+}
+
+.well > ul, .well > ol, .well > table {
+  margin-bottom: 0;
+}
+
+.well > p {
+  margin-bottom: 8px;
+}
+
+.example {
+  padding: 0 0 0 15px;
+  margin: 30px 0;
+  border-left: 5px solid #bce8f1;
+}
+
+.svg-well {
+  margin: 0 auto 20px;
+  width: 350px;
+}
+
+svg.static {
+  background: none;
+  border-radius: none;
+}
+
+svg.static * {
+  cursor: default;
+}
+
+.wffs > div {
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+}
+
+.indent {
+  margin-left: 10px;
+}
+
+footer {
+  margin: 75px 0 25px;
+  text-align: center;
+  font-size: 13px;
+}
+
+#link-dialog.in {
+  top: 302px;
+}
+
+#link-dialog .modal-header {
+  background-color: #f7f7f7;
+  border-radius: 5px 5px 0 0;
+}
+
+#link-dialog input {
+  width: 516px;
+  background-color: #fff;
+  cursor: default;
+}
