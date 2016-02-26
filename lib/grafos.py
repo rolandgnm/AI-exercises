@@ -7,6 +7,7 @@
 
 import os
 from Queue import Queue
+from Queue import LifoQueue
 
 
 class Vertice:
@@ -75,24 +76,61 @@ class Grafo:
 
 
 class Buscador:
-    def __init__(self):
-        self.tamVertVisitados = 0
+    def __init__(self, grf):
         self.fifo = Queue()
+        self.lifo = LifoQueue()
+        self.visitados = []
+        self.grf = grf
+        self.destino = grf.indiceDestino
+
+    def clean(self):
+        self.fifo = Queue()
+        self.lifo = LifoQueue()
         self.visitados = []
 
-    def imprimeVisitados(self):
-        print "\n ### A B C D ### "
+    def imprimeLista(self, lista):
+        for i in range(len(lista)):
+            print self.grf.verticeRotulo(self.visitados[i]),
 
-    def bLargura(self, grf):
+    def bLargura(self):
         # Colocando raiz na fila
-        for i in range(5):
-            print i
-            self.tamVertVisitados += 1
-            self.visitados.append(i)
-            self.fifo.put(i)
+        self.fifo.put(self.grf.indiceOrigem)
 
         while not self.fifo.empty():
-            print "FIFO{}".format(self.fifo.get())
+            verticeAtual = self.fifo.get()
+            self.visitados.append(verticeAtual)
+
+            if verticeAtual == self.destino:
+                print verticeAtual
+                self.imprimeLista(self.visitados)
+                return True
+
+            # Expandir para o proximo nível.
+            self.expandirFilaLargura(verticeAtual)
+
+    def bProfundidade(self):
+            # Colocando raiz na fila
+            self.lifo.put(self.grf.indiceOrigem)
+
+            while not self.lifo.empty():
+                verticeAtual = self.lifo.get()
+                self.visitados.append(verticeAtual)
+
+                if verticeAtual == self.destino:
+                    print verticeAtual
+                    self.imprimeLista(self.visitados)
+                    return True
+
+                # Expandir para o proximo nível.
+                self.expandirFilaLargura(verticeAtual)
+            return False
+
+    def expandirFilaLargura(self, vertice):
+        for vAdjacente in range(self.grf.numVertices):
+            if self.grf.matrizAdjacencias[vertice][vAdjacente]:
+
+                if int(vAdjacente) not in self.visitados:
+                    self.fifo.put(vAdjacente)
 
 
 if __name__ == "__main__":
@@ -162,9 +200,16 @@ if __name__ == "__main__":
             grf.marcaDestino(rDestino)
 
         elif escolha == 'l':
-            buscador = Buscador()
-            buscador.bLargura(grf)
-            buscador.imprimeVisitados()
+            print
+            print "Busca por Largura"
+            buscador = Buscador(grf)
+            buscador.bLargura()
+
+            print
+            print "Busca por Profundidade"
+            buscador.clean()
+            buscador = Buscador(grf)
+            buscador.bProfundidade()
 
         elif escolha == 's':
             break
