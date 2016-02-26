@@ -92,7 +92,7 @@ class Buscador:
             self.fifo.put(i)
 
         while not self.fifo.empty():
-            print "FIFO {}".format(self.fifo.get())
+            print "FIFO{}".format(self.fifo.get())
 
 
 if __name__ == "__main__":
