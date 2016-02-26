@@ -3,9 +3,10 @@
 #
 # programa ilustrando o uso de grafos
 #
-#
+# EM ADAPTÁCÃO PARA FAZER BUSCA
 
 import os
+from Queue import Queue
 
 
 class Vertice:
@@ -18,6 +19,8 @@ class Vertice:
 
 class Grafo:
     def __init__(self):
+        self.indiceDestino = None
+        self.indiceOrigem = None
         self.numVerticesMaximo = 20
         self.numVertices = 0
         self.listaVertices = []
@@ -36,14 +39,14 @@ class Grafo:
         self.matrizAdjacencias[inicio][fim] = 1
         self.matrizAdjacencias[fim][inicio] = 1
 
-    def marcaInicio(self, vertInicial):
-        self.vertInicial = vertInicial
+    def marcaInicio(self, indiceOrigem):
+        self.indiceOrigem = self.localizaRotulo(indiceOrigem)
 
-    def marcaDestino(self, vertDestino):
-        self.vertDestino = vertDestino
+    def marcaDestino(self, indiceDestino):
+        self.indiceDestino = self.localizaRotulo(indiceDestino)
 
-    # def mostraVertice(self,vertice):
-    #   print self.matrizAdjacencias[vertice].rotulo
+    def verticeRotulo(self, indice):
+        return self.listaVertices[indice].rotulo
 
     def imprimeMatriz(self):
         print " ",
@@ -56,44 +59,113 @@ class Grafo:
                 print self.matrizAdjacencias[i][j],
             print
 
+    def imprimeOrigemDestino(self):
+        if grf.indiceOrigem is not None and grf.indiceDestino is not None:
+            print "Origem: {}  índice {} ".format(
+                grf.verticeRotulo(grf.indiceOrigem), grf.indiceOrigem)
+            print "Destino:{}  índice {} ".format(
+                grf.verticeRotulo(grf.indiceDestino), grf.indiceDestino)
+            print
+
     def localizaRotulo(self, rotulo):
         for i in range(self.numVertices):
             if self.listaVertices[i].igualA(rotulo):
                 return i
         return -1
 
-# class Buscador:
-    # def __init__(self,):
+
+class Buscador:
+    def __init__(self):
+        self.tamVertVisitados = 0
+        self.fifo = Queue()
+        self.visitados = []
+
+    def imprimeVisitados(self):
+        print "\n ### A B C D ### "
+
+    def bLargura(self, grf):
+        # Colocando raiz na fila
+        for i in range(5):
+            print i
+            self.tamVertVisitados += 1
+            self.visitados.append(i)
+            self.fifo.put(i)
+
+        while not self.fifo.empty():
+            print "FIFO {}".format(self.fifo.get())
 
 
 if __name__ == "__main__":
     os.system("clear")
-
     grf = Grafo()
     while True:
+        print " "
         print "Escolha sua opção "
-        print "(M) mostra, (V) inserir Vértice  (A) Inserir Arco (S) sair"
-        escolha = str(raw_input("Digite sua opção ")).lower()
+        print "(V) inserir Vértice  (A) Inserir Arco"
+        print "(O) Marcar Vertice Origem e Destino para a Busca"
+        print "(M) mostra Matriz"
+        print "(L) Busca em Largura (P) Busca em profundidade"
+        print "(S) sair"
+        escolha = str(raw_input("Digite sua opção \n")).lower()
         if escolha == 'm':
             grf.imprimeMatriz()
+            print " "
+            grf.imprimeOrigemDestino()
+
         elif escolha == 'v':
-            val = str(raw_input("Digite o rótulo do arco  a inserir "))
+            val = str(
+                raw_input("Digite o rótulo do vértice  a inserir ")).upper()
+            if grf.localizaRotulo(val) >= 0:
+                print "Vértice já existe, tente outra vez"
+                raw_input()
+                continue
+            if not val:
+                raw_input()
+                continue
             grf.adicionaVertice(val)
+
         elif escolha == 'a':
             rinicio = str(
-                raw_input("Digite o rótulo do vértice de início do arco "))
+                raw_input(
+                    "Digite o rótulo do vértice de início do arco ")).upper()
             inicio = grf.localizaRotulo(rinicio)
             if inicio == -1:
                 print "Vértice não cadastrado. Cadastre o vértice primeiro "
                 raw_input()
                 continue
-            rfim = str(raw_input("Digite o rótulo do vértice de fim do arco "))
+            rfim = str(
+                raw_input(
+                    "Digite o rótulo do vértice de fim do arco ")).upper()
             fim = grf.localizaRotulo(rfim)
             if fim == -1:
                 print "Vértice não cadastrado. Cadastre o vértice primeiro "
                 raw_input()
                 continue
             grf.adicionaArco(inicio, fim)
+
+        elif escolha == 'o':
+            rOrigem = str(
+                raw_input("Digite o rótulo do vértice Origem ")).upper()
+            if grf.localizaRotulo(rOrigem) == -1:
+                print "Vértice não cadastrado. Cadastre o vértice primeiro "
+                raw_input()
+                continue
+            grf.marcaInicio(rOrigem)
+            # print grf.indiceOrigem
+
+            rDestino = str(
+                raw_input("Digite o rótulo do vértice Destino ")).upper()
+            if grf.localizaRotulo(rDestino) == -1:
+                print "Vértice não cadastrado. Cadastre o vértice primeiro "
+                raw_input()
+                continue
+            grf.marcaDestino(rDestino)
+
+        elif escolha == 'l':
+            buscador = Buscador()
+            buscador.bLargura(grf)
+            buscador.imprimeVisitados()
+
         elif escolha == 's':
             break
         else:

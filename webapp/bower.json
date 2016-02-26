@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "d3": "~3.5.3",
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.2.1"
   }
 }

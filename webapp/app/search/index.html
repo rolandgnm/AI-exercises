@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Breadth and Detph First on Graphs</title>
+    <link rel="stylesheet" href="../../node_modules/normalize.css/normalize.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+  </head>
+
+  <body class="container">
+    <div id="page-container">
+      <a href="https://github.com/rkirsling/modallogic"><img class="github-link" src="img/blacktocat-32.png" title="Fork me on GitHub"></a>
+      <h1>Breadth and Detph First on Graphs</h1>
+      
+      <section id="app">
+        <div id="mode-select" class="btn-group">
+          <button class="btn btn-primary active" onclick="setAppMode(MODE.EDIT)">
+            <i class="icon-resize-horizontal icon-white"></i> Breadth First
+          </button>
+          <button class="btn btn-primary" onclick="setAppMode(MODE.EVAL)">
+            <i class="icon-resize-vertical icon-white"></i> Depth First
+          </button>
+        </div>
+        
+        <!--<div id="app-body">-->
+    
+          <div class="graph row-fluid"></div>
+
+        <!--</div>-->
+      </section>
+      <footer>
+        Modal Logic Playground is a creation of <a href="https://github.com/rkirsling">Ross Kirsling</a>, released under the <a href="http://opensource.org/licenses/mit-license.php">MIT License</a>.
+      </footer>
+    </div>
+  </body>
+
+  <script src="lib/d3.min.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.slim.min.js"></script>
+  <script src="lib/formula-parser.min.js"></script>
+  <script src="js/MPL.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+      var chart = $(".graph"),
+    aspect = chart.width() / chart.height(),
+    container = chart.parent();
+$(window).on("resize", function() {
+    var targetWidth = container.width();
+    chart.attr("width", targetWidth);
+    chart.attr("height", Math.round(targetWidth / aspect));
+}).trigger("resize");
+  </script>
+</html>
