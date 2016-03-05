@@ -62,7 +62,7 @@ class Grafo:
         if grf.indiceOrigem is not None and grf.indiceDestino is not None:
             print "Origem: {}  índice {} ".format(
                 grf.verticeRotulo(grf.indiceOrigem), grf.indiceOrigem)
-            print "Destino:{}  índice {} ".format(
+            print "Destino: {}  índice {} ".format(
                 grf.verticeRotulo(grf.indiceDestino), grf.indiceDestino)
             print
 
@@ -113,8 +113,8 @@ class Buscador:
             self.visitados.append(verticeAtual)
 
             if verticeAtual == self.destino:
-                print "Vertice Destino",
-                self.grf.verticeRotulo(verticeAtual), "Encontrado"
+                print "Vertice Destino {}".format(
+                    self.grf.verticeRotulo(verticeAtual)), "Encontrado"
 
                 self.imprimeLista(self.visitados)
                 return True
@@ -132,7 +132,8 @@ class Buscador:
     def bProfundidade(self, verticeAtual):
         self.visitados.append(verticeAtual)
         if verticeAtual == self.destino:
-            print "Vertice Destino", verticeAtual, "Encontrado"
+            print "Vertice Destino {}".format(
+                self.grf.verticeRotulo(verticeAtual)), "Encontrado"
             self.imprimeLista(self.visitados)
             return True
 
