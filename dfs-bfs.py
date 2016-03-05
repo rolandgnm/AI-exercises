@@ -6,8 +6,6 @@
 # EM ADAPTÁCÃO PARA FAZER BUSCA
 
 import os
-from collections import deque
-from Queue import LifoQueue
 
 
 class Vertice:
@@ -77,68 +75,74 @@ class Grafo:
 
 class Buscador:
     def __init__(self, grf):
-        self.proximos = deque()
+        self.proximos = []
         self.visitados = []
         self.grf = grf
         self.destino = grf.indiceDestino
 
     def clean(self):
         if self.proximos:
-            self.proximos.clear()
-        if self.lifo:
-            self.lifo = []
+            self.proximos = []
         if self.visitados:
             self.visitados = []
 
     def expandirProximos(self, vertice):
         for vAdjacente in range(self.grf.numVertices):
             if self.grf.matrizAdjacencias[vertice][vAdjacente]:
-
                 if vAdjacente not in self.visitados:
                     if vAdjacente not in self.proximos:
                         self.proximos.append(vAdjacente)
 
-
     def imprimeLista(self, lista):
+        print "##############################\n\n"
         print "Tamanho lista visitados: ", len(lista)
+        print "Caminho percorrido: "
+
         for i in range(len(lista)):
             print self.grf.verticeRotulo(self.visitados[i]),
+        print "\n\n##############################"
 
     def bLargura(self):
+        if self.proximos:
+            self.clean()
         # Colocando raiz na fila
         self.proximos.append(self.grf.indiceOrigem)
 
         while self.proximos:
-            verticeAtual = self.proximos.popleft()
+            verticeAtual = self.proximos.pop(0)
             self.visitados.append(verticeAtual)
 
             if verticeAtual == self.destino:
-                print "Vertice Destino", verticeAtual, "Encontrado"
+                print "Vertice Destino",
+                self.grf.verticeRotulo(verticeAtual), "Encontrado"
+
                 self.imprimeLista(self.visitados)
                 return True
 
             # Expandir para o proximo nível.
             self.expandirProximos(verticeAtual)
 
-    def bProfundidade(self):
-        # Colocando raiz na fila
-        self.proximos.append(self.grf.indiceOrigem)
+    def adjacentes(self, vertice):
+        adjacentes = []
+        for i, val in enumerate(self.grf.matrizAdjacencias[vertice]):
+            if self.grf.matrizAdjacencias[vertice][i]:
+                adjacentes.append(i)
+        return adjacentes
 
-        while self.proximos:
-            # Ponto em que DFS difere de BFS:
-            verticeAtual = self.proximos.pop()
-            self.visitados.append(verticeAtual)
+    def bProfundidade(self, verticeAtual):
+        self.visitados.append(verticeAtual)
+        if verticeAtual == self.destino:
+            print "Vertice Destino", verticeAtual, "Encontrado"
+            self.imprimeLista(self.visitados)
+            return True
 
-            if verticeAtual == self.destino:
-                print "Vertice Destino", verticeAtual, "Encontrado"
-                self.imprimeLista(self.visitados)
-                return True
-
-            # Expandir para o proximo nível.
-            self.expandirProximos(verticeAtual)
+        for adj in self.adjacentes(verticeAtual):
+            if adj not in self.visitados:
+                self.bProfundidade(adj)
 
 if __name__ == "__main__":
     os.system("clear")
+
     grf = Grafo()
     while True:
         print " "
@@ -207,13 +211,15 @@ if __name__ == "__main__":
             print
             print "Busca por Largura"
             buscador = Buscador(grf)
+            buscador.clean()
             buscador.bLargura()
 
         elif escolha == 'p':
             print
             print "Busca por Profundidade"
             buscador = Buscador(grf)
-            buscador.bProfundidade()
+            buscador.clean()
+            buscador.bProfundidade(grf.indiceOrigem)
 
         elif escolha == 's':
             break
