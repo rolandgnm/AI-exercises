@@ -1,11 +1,11 @@
 # dfs-bfs
 Depth First Search e Breadth First Search in graphs
-### Interactive Mode
+#### Interactive Mode
 ```
 python dfs-bfs.py
 ```
 
-### Automatic Mode
+#### Automatic Mode
 ```
 python dfs-bfs.py < input.txt
 ``` 
